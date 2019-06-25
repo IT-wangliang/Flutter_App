@@ -16,7 +16,7 @@ class PubModale {
           break;
         case 'post':
           response = await dio.post(Config.baseUrl + url, data: data);
-        // break;
+          break;
       }
       return response;
     } catch (e) {
