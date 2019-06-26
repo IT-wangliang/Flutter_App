@@ -5,6 +5,7 @@ import 'package:flutter_app/news/news.dart';
 import 'package:flutter_app/question/question.dart';
 import 'package:flutter_app/user/user.dart';
 import 'Home.dart';
+import 'detail/detail.dart';
 
 void main() {
   PubModale.checkuser().then((res) {

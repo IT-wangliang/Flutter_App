@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/news/searchBox.dart';
 import 'package:flutter_app/news/tabBar.dart';
 import 'package:flutter_app/news/tabBarContent.dart';
+import 'drawerList.dart';
 
 class News extends StatefulWidget {
   @override
@@ -13,62 +14,19 @@ class _NewsState extends State<News> {
   _getChannels() async {
     setState(() {
       channels = [
-        {
-          "name": "微信精选",
-          "nameid": "wxnew",
-        },
-        {
-          "name": "IT资讯",
-          "nameid": "it",
-        },
-        {
-          "name": "动漫资讯",
-          "nameid": "dongman",
-        },
-        {
-          "name": "人工智能",
-          "nameid": "ai",
-        },
-        {
-          "name": "区块链",
-          "nameid": "blockchain",
-        },
-        {
-          "name": "苹果新闻",
-          "nameid": "apple",
-        },
-        {
-          "name": "体育新闻",
-          "nameid": "tiyu",
-        },
-        {
-          "name": "足球新闻",
-          "nameid": "football",
-        },
-        {
-          "name": "NBA新闻",
-          "nameid": "nba",
-        },
-        {
-          "name": "CBA新闻",
-          "nameid": "cba",
-        },
-        {
-          "name": "娱乐新闻",
-          "nameid": "huabian",
-        },
-        {
-          "name": "社会新闻",
-          "nameid": "social",
-        },
-        {
-          "name": "国际新闻",
-          "nameid": "world",
-        },
-        {
-          "name": "国内新闻",
-          "nameid": "guonei",
-        },
+        {"name": "IT资讯", "nameid": "it"},
+        {"name": "动漫资讯", "nameid": "dongman"},
+        {"name": "人工智能", "nameid": "ai"},
+        {"name": "区块链", "nameid": "blockchain"},
+        {"name": "苹果新闻", "nameid": "apple"},
+        {"name": "体育新闻", "nameid": "tiyu"},
+        {"name": "足球新闻", "nameid": "football"},
+        {"name": "NBA新闻", "nameid": "nba"},
+        {"name": "CBA新闻", "nameid": "cba"},
+        {"name": "娱乐新闻", "nameid": "huabian"},
+        {"name": "社会新闻", "nameid": "social"},
+        {"name": "国际新闻", "nameid": "world"},
+        {"name": "国内新闻", "nameid": "guonei"},
       ];
     });
   }
@@ -99,6 +57,7 @@ class _NewsState extends State<News> {
                   return TabBarContent(val['nameid']);
                 }).toList(),
               ),
+              drawer: DrawerList(),
             ),
           );
   }

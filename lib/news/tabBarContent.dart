@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/detail/detail.dart';
 import 'package:flutter_app/module/pub.dart';
 import 'package:flutter_app/news/model/article.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -17,7 +18,7 @@ class _TabBarContentState extends State<TabBarContent> {
   _getData([type]) async {
     var url = 'http://api.tianapi.com/' +
         widget.nameid +
-        '?key=ff0326cdc30c19360a682727a275e4eb&num=5&page=' +
+        '?key=ff0326cdc30c19360a682727a275e4eb&num=10&page=' +
         _page.toString();
     var data = await PubModale.httpRequest('get', url);
     List jsonList = data.data['newslist'];
@@ -42,37 +43,52 @@ class _TabBarContentState extends State<TabBarContent> {
 
   @override
   void initState() {
-    super.initState();
-    _getData();
-    // 添加上拉行为
-    _controller.addListener(() {
-      var maxScroll = _controller.position.maxScrollExtent;
-      var pixels = _controller.position.pixels;
-      if (maxScroll == pixels) {
-        _page++;
-        _getData(1);
-      }
-    });
+    if (this.mounted) {
+      super.initState();
+      _getData();
+      // 添加上拉行为
+      _controller.addListener(() {
+        var maxScroll = _controller.position.maxScrollExtent;
+        var pixels = _controller.position.pixels;
+        if (maxScroll == pixels) {
+          _page++;
+          _getData(1);
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 10.0,
-          right: 10.0,
-        ),
-        child: ListView.builder(
-          itemCount: _list.length,
-          itemBuilder: (context, index) {
-            return NewsItem(_list[index]);
-          },
-          controller: _controller,
-        ),
-      ),
-    );
+    return _list.length == 0
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : RefreshIndicator(
+            onRefresh: _refresh,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 10.0,
+                right: 10.0,
+              ),
+              child: ListView.builder(
+                itemCount: _list.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: NewsItem(_list[index]),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsDetail(_list[index].url),
+                          ));
+                    },
+                  );
+                },
+                controller: _controller,
+              ),
+            ),
+          );
   }
 }
 
