@@ -14,21 +14,15 @@ class TabBarContent extends StatefulWidget {
 class _TabBarContentState extends State<TabBarContent> {
   List<Article> _list = [];
   ScrollController _controller = ScrollController();
-  int _page = 1;
   _getData([type]) async {
-    var url = 'http://api.tianapi.com/' +
-        widget.nameid +
-        '?key=ff0326cdc30c19360a682727a275e4eb&num=10&page=' +
-        _page.toString();
+    _list.clear();
+    Future.delayed(Duration(seconds: 2));
+    var url = 'https://www.toutiao.com/api/pc/feed/?category=${widget.nameid}';
     var data = await PubModale.httpRequest('get', url);
-    List jsonList = data.data['newslist'];
+    List jsonList = data.data['data'];
     List<Article> listData =
         jsonList.map((val) => Article.fromJson(val)).toList();
-    if (type == 1) {
-      setState(() {
-        _list.addAll(listData);
-      });
-    } else {
+    if (this.mounted) {
       setState(() {
         _list = listData;
       });
@@ -37,7 +31,6 @@ class _TabBarContentState extends State<TabBarContent> {
 
   //下拉刷新
   Future _refresh() async {
-    _page = 1;
     _getData();
   }
 
@@ -51,8 +44,7 @@ class _TabBarContentState extends State<TabBarContent> {
         var maxScroll = _controller.position.maxScrollExtent;
         var pixels = _controller.position.pixels;
         if (maxScroll == pixels) {
-          _page++;
-          _getData(1);
+          _getData();
         }
       });
     }
@@ -80,7 +72,8 @@ class _TabBarContentState extends State<TabBarContent> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NewsDetail(_list[index].url),
+                            builder: (context) =>
+                                NewsDetail(_list[index].itemId),
                           ));
                     },
                   );
@@ -103,53 +96,87 @@ class NewsItem extends StatelessWidget {
         SizedBox(
           height: 5.0,
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Column(
+        article.imgUrl == null
+            ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
                     article.title,
                     style: TextStyle(
+                      color: Colors.black,
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(
-                    height: 35.0,
+                    height: 5,
                   ),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: article.description + '    ',
+                          text: article.source + '  ',
                           style: TextStyle(color: Colors.grey),
                         ),
                         TextSpan(
-                          text: timeago.format(DateTime.parse(article.ctime)),
+                          text: timeago.format(
+                            DateTime.parse(article.behotTime.toString()),
+                          ),
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
+                  )
+                ],
+              )
+            : Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          article.title,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 35.0,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: article.source + '    ',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              TextSpan(
+                                text: timeago.format(
+                                  DateTime.parse(article.behotTime.toString()),
+                                ),
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  SizedBox(
+                    width: 100.0,
+                    height: 100.0,
+                    child: Image.network(
+                      'https:' + article.imgUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              width: 5.0,
-            ),
-            SizedBox(
-              width: 100.0,
-              height: 100.0,
-              child: Image.network(
-                article.picUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ],
-        ),
         SizedBox(
           height: 10.0,
         ),
@@ -163,41 +190,7 @@ class NewsItem extends StatelessWidget {
 
 // ListView(
 //         children: <Widget>[
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
-//               Text(
-//                 '罗永浩再谈收购苹果，看到评论笑开了花',
-//                 style: TextStyle(
-//                   color: Colors.black,
-//                   fontSize: 16.0,
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 5,
-//               ),
-//               RichText(
-//                 text: TextSpan(
-//                   text: '置顶  ',
-//                   style: TextStyle(color: Colors.red),
-//                   children: [
-//                     TextSpan(
-//                       text: '小超科技君  ',
-//                       style: TextStyle(color: Colors.grey),
-//                     ),
-//                     TextSpan(
-//                       text: '18评论  ',
-//                       style: TextStyle(color: Colors.grey),
-//                     ),
-//                     TextSpan(
-//                       text: '10分钟前  ',
-//                       style: TextStyle(color: Colors.grey),
-//                     ),
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
+//           ,
 //           SizedBox(
 //             height: 10.0,
 //           ),

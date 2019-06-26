@@ -1,15 +1,15 @@
 class Article {
   String title;
-  String description;
-  String ctime;
-  String picUrl;
-  String url;
+  String source;
+  int behotTime;
+  String imgUrl;
+  String itemId;
 
   Article.fromJson(json) {
     title = json['title'];
-    description = json['description'];
-    ctime = json['ctime'];
-    picUrl = json['picUrl'];
-    url = json['url'];
+    source = json['source'];
+    behotTime = json['behot_time'];
+    imgUrl = json['image_url'];
+    itemId = json['item_id'];
   }
 }

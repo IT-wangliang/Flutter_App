@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/module/pub.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -15,36 +14,51 @@ class _DrawerListState extends State<DrawerList> {
     // 数据持久化
     setState(() {
       _userChannel = [
-        {"name": "IT资讯", "nameid": "it"},
-        {"name": "动漫资讯", "nameid": "dongman"},
-        {"name": "人工智能", "nameid": "ai"},
-        {"name": "区块链", "nameid": "blockchain"},
-        {"name": "苹果新闻", "nameid": "apple"},
-        {"name": "体育新闻", "nameid": "tiyu"},
-        {"name": "足球新闻", "nameid": "football"},
+        {'name': '推荐', 'nameid': '__all__'},
+        {'name': '热点', 'nameid': 'news_hot'},
+        {'name': '社会', 'nameid': 'news_society'},
+        {'name': '娱乐', 'nameid': 'news_entertainment'},
+        {'name': '科技', 'nameid': 'news_tech'},
+        {'name': '汽车', 'nameid': 'news_car'},
+        {'name': '体育', 'nameid': 'news_sports'},
+        {'name': '财经', 'nameid': 'news_finance'},
+        {'name': '军事', 'nameid': 'news_military'},
+        {'name': '国际', 'nameid': 'news_world'},
+        {'name': '时尚', 'nameid': 'news_fashion'},
       ];
     });
   }
 
   // 获取所有频道
   _getAllChannerl() async {
-    var url =
-        'http://api.tianapi.com/channellist?key=ff0326cdc30c19360a682727a275e4eb';
-    var data = await PubModale.httpRequest('get', url);
     setState(() {
-      _allChannel = data.data['newslist'];
+      _allChannel = [
+        {'name': '推荐', 'nameid': '__all__'},
+        {'name': '热点', 'nameid': 'news_hot'},
+        {'name': '社会', 'nameid': 'news_society'},
+        {'name': '娱乐', 'nameid': 'news_entertainment'},
+        {'name': '科技', 'nameid': 'news_tech'},
+        {'name': '汽车', 'nameid': 'news_car'},
+        {'name': '体育', 'nameid': 'news_sports'},
+        {'name': '财经', 'nameid': 'news_finance'},
+        {'name': '军事', 'nameid': 'news_military'},
+        {'name': '国际', 'nameid': 'news_world'},
+        {'name': '时尚', 'nameid': 'news_fashion'},
+      ];
     });
   }
 
-  // 获取用户信息
-  _getUserInfo() {}
+  //
+  _saveChannel() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setStringList('channel', _userChannel);
+  }
 
   @override
   void initState() {
     super.initState();
     _getUserChannel();
     _getAllChannerl();
-    _getUserInfo();
   }
 
   @override
@@ -98,6 +112,10 @@ class _DrawerListState extends State<DrawerList> {
                 onTap: () {
                   setState(() {
                     isEdit = !isEdit;
+                    print(isEdit);
+                    if (!isEdit) {
+                      _saveChannel();
+                    }
                   });
                 },
                 child: Text(
@@ -155,6 +173,7 @@ class _DrawerListState extends State<DrawerList> {
                   label: Text(val['name']),
                   onSelected: (status) {
                     setState(() {
+                      isEdit = true;
                       _allChannel.remove(val);
                       _userChannel.add(val);
                     });

@@ -15,12 +15,14 @@ class _NewsDetailState extends State<NewsDetail> {
   var _detail;
   _getDatail() async {
     var url =
-        'http://api.tianapi.com/txapi/htmltext?key=ff0326cdc30c19360a682727a275e4eb&url=' +
-            widget.url;
+        'http://api.tianapi.com/txapi/toutiaotxt/?key=ff0326cdc30c19360a682727a275e4eb&url=' +
+            'https://www.toutiao.com/a${widget.url}/';
     var data = await PubModale.httpRequest('get', url);
-    setState(() {
-      _detail = data.data['newslist'][0];
-    });
+    if (this.mounted) {
+      setState(() {
+        _detail = data.data['newslist'][0];
+      });
+    }
   }
 
   @override
@@ -92,7 +94,8 @@ class _NewsDetailState extends State<NewsDetail> {
                                       onTap: null,
                                       child: CircleAvatar(
                                         backgroundImage: NetworkImage(
-                                            'http://5b0988e595225.cdn.sohucs.com/images/20171030/26ed195281334ba4b1752394b60eb29a.jpeg'),
+                                          'https:' + _detail['avatar'],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -156,7 +159,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                     onTap: null,
                                     child: CircleAvatar(
                                       backgroundImage: NetworkImage(
-                                          'http://5b0988e595225.cdn.sohucs.com/images/20171030/26ed195281334ba4b1752394b60eb29a.jpeg'),
+                                          'https:' + _detail['avatar']),
                                     ),
                                   ),
                                 ),
@@ -175,7 +178,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                       ),
                                     ),
                                     Text(
-                                      _detail['ctime'],
+                                      _detail['source'],
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 14,

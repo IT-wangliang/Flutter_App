@@ -14,19 +14,17 @@ class _NewsState extends State<News> {
   _getChannels() async {
     setState(() {
       channels = [
-        {"name": "IT资讯", "nameid": "it"},
-        {"name": "动漫资讯", "nameid": "dongman"},
-        {"name": "人工智能", "nameid": "ai"},
-        {"name": "区块链", "nameid": "blockchain"},
-        {"name": "苹果新闻", "nameid": "apple"},
-        {"name": "体育新闻", "nameid": "tiyu"},
-        {"name": "足球新闻", "nameid": "football"},
-        {"name": "NBA新闻", "nameid": "nba"},
-        {"name": "CBA新闻", "nameid": "cba"},
-        {"name": "娱乐新闻", "nameid": "huabian"},
-        {"name": "社会新闻", "nameid": "social"},
-        {"name": "国际新闻", "nameid": "world"},
-        {"name": "国内新闻", "nameid": "guonei"},
+        {'name': '推荐', 'nameid': '__all__'},
+        {'name': '热点', 'nameid': 'news_hot'},
+        {'name': '社会', 'nameid': 'news_society'},
+        {'name': '娱乐', 'nameid': 'news_entertainment'},
+        {'name': '科技', 'nameid': 'news_tech'},
+        {'name': '汽车', 'nameid': 'news_car'},
+        {'name': '体育', 'nameid': 'news_sports'},
+        {'name': '财经', 'nameid': 'news_finance'},
+        {'name': '军事', 'nameid': 'news_military'},
+        {'name': '国际', 'nameid': 'news_world'},
+        {'name': '时尚', 'nameid': 'news_fashion'},
       ];
     });
   }
