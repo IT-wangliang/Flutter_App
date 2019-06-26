@@ -6,6 +6,7 @@ class SearchBox extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print('跳转搜索页面');
+        Navigator.pushNamed(context, '/search');
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5.0),

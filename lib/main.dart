@@ -3,9 +3,9 @@ import 'package:flutter_app/login.dart';
 import 'package:flutter_app/module/pub.dart';
 import 'package:flutter_app/news/news.dart';
 import 'package:flutter_app/question/question.dart';
+import 'package:flutter_app/search/search.dart';
 import 'package:flutter_app/user/user.dart';
 import 'Home.dart';
-import 'detail/detail.dart';
 
 void main() {
   PubModale.checkuser().then((res) {
@@ -28,6 +28,7 @@ class App extends StatelessWidget {
         '/news': (context) => News(),
         '/question': (context) => Question(),
         '/uesr': (context) => User(),
+        '/search': (context) => SearchPage(),
       },
     );
   }

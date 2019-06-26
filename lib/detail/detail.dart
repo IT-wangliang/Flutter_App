@@ -3,6 +3,8 @@ import 'package:flutter_app/detail/shareSheet.dart';
 import 'package:flutter_app/module/pub.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+import 'comment.dart';
+
 class NewsDetail extends StatefulWidget {
   final String url;
   NewsDetail(this.url);
@@ -106,42 +108,42 @@ class _NewsDetailState extends State<NewsDetail> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        '王小帅',
+                                        _detail['source'],
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
-                              RaisedButton.icon(
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                                label: Text('关注',
-                                    style: TextStyle(color: Colors.white)),
-                                elevation: 0,
-                                color: Colors.blue,
-                                onPressed: () {
-                                  print('点击了按钮4');
-                                },
-                              ),
                             ],
                           ),
                         ),
                         backgroundColor: Color.fromRGBO(247, 247, 247, 1),
-                        leading: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.grey,
+                        leading: Container(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                         actions: <Widget>[
                           IconButton(
                             icon: Icon(Icons.more_horiz),
                             color: Colors.grey,
-                            onPressed: null,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ShareSheet();
+                                  });
+                            },
                           ),
                         ],
                       ),
@@ -171,16 +173,9 @@ class _NewsDetailState extends State<NewsDetail> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      '王小帅',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
                                       _detail['source'],
                                       style: TextStyle(
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                         fontSize: 14,
                                       ),
                                     ),
@@ -245,7 +240,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 20,
                                 child: Text(
-                                  '学习Flutter',
+                                  '李凯馨',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -255,7 +250,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 20,
                                 child: Text(
-                                  '学习Flutter',
+                                  '迪丽热巴',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -265,7 +260,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 20,
                                 child: Text(
-                                  '学习Flutter',
+                                  '石原里美',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -275,7 +270,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 20,
                                 child: Text(
-                                  '学习Flutter',
+                                  '杨幂',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -351,7 +346,8 @@ class _NewsDetailState extends State<NewsDetail> {
                     ),
                     SizedBox(
                       height: 20,
-                    )
+                    ),
+                    Commnet()
                   ]),
                 ),
               ],
